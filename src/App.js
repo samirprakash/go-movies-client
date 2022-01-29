@@ -24,7 +24,7 @@ function App() {
                     <Link to="/movies">Movies</Link>
                   </li>
                   <li className="list-group-item">
-                    <Link to="/admin">Manage Catalogue</Link>
+                    <Link to="/admin">Admin</Link>
                   </li>
                 </ul>
               </nav>
