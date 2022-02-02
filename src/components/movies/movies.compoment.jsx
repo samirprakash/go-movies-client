@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState();
 
   useEffect(() => {
     getMovies();
@@ -11,14 +12,31 @@ const Movies = () => {
 
   const getMovies = async () => {
     await fetch('http://localhost:4000/v1/movies')
-      .then((response) => response.json())
-      .then((json) => {
-        setMovies(json.movies);
-        setIsLoaded(true);
-      });
+      .then((response) => {
+        console.log('Status code is : ', response.status);
+        if (response.status !== 200) {
+          let err = Error;
+          err.message = 'Invalid status code :' + response.status;
+          setError(err);
+        }
+        return response.json();
+      })
+      .then(
+        (json) => {
+          setMovies(json.movies);
+          setIsLoaded(true);
+        },
+        (error) => {
+          console.log(error);
+          setIsLoaded(true);
+          setError(error);
+        }
+      );
   };
 
-  if (!isLoaded) {
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  } else if (!isLoaded) {
     return <p>Loading...</p>;
   } else {
     return (
