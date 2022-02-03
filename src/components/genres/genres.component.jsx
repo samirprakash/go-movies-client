@@ -42,18 +42,18 @@ const Genres = () => {
       <Fragment>
         <h2>Genres</h2>
 
-        <ul>
+        <div className="list-group">
           {genres.map((genre) => (
-            <li key={genre.id}>
-              <Link
-                to={`/genres/${genre.id}`}
-                state={{ genreName: genre.genre_name }}
-              >
-                {genre.genre_name}
-              </Link>
-            </li>
+            <Link
+              key={genre.id}
+              to={`/genres/${genre.id}`}
+              state={{ genreName: genre.genre_name }}
+              className="list-group-item list-group-item-action"
+            >
+              {genre.genre_name}
+            </Link>
           ))}
-        </ul>
+        </div>
       </Fragment>
     );
   }
