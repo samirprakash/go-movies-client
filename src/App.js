@@ -1,5 +1,6 @@
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import Admin from './components/admin/admin.component';
+import Genre from './components/genres/genre.component';
 import Genres from './components/genres/genres.component';
 import Home from './components/home/home.component';
 import Movie from './components/movies/movie.component';
@@ -41,6 +42,7 @@ function App() {
                 <Route path="movies" element={<Movies />}></Route>
                 <Route path="movies/:id" element={<Movie />}></Route>
                 <Route exact path="genres" element={<Genres />}></Route>
+                <Route exact path="genres/:id" element={<Genre />}></Route>
                 <Route path="admin" element={<Admin />}></Route>
               </Routes>
             </div>

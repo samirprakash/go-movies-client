@@ -7,32 +7,31 @@ const Movies = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const getMovies = async () => {
+      await fetch('http://localhost:4000/v1/movies')
+        .then((response) => {
+          console.log('Status code is : ', response.status);
+          if (response.status !== 200) {
+            let err = Error;
+            err.message = 'Invalid status code :' + response.status;
+            setError(err);
+          }
+          return response.json();
+        })
+        .then(
+          (json) => {
+            setMovies(json.movies);
+            setIsLoaded(true);
+          },
+          (error) => {
+            console.log(error);
+            setIsLoaded(true);
+            setError(error);
+          }
+        );
+    };
     getMovies();
   }, []);
-
-  const getMovies = async () => {
-    await fetch('http://localhost:4000/v1/movies')
-      .then((response) => {
-        console.log('Status code is : ', response.status);
-        if (response.status !== 200) {
-          let err = Error;
-          err.message = 'Invalid status code :' + response.status;
-          setError(err);
-        }
-        return response.json();
-      })
-      .then(
-        (json) => {
-          setMovies(json.movies);
-          setIsLoaded(true);
-        },
-        (error) => {
-          console.log(error);
-          setIsLoaded(true);
-          setError(error);
-        }
-      );
-  };
 
   if (error) {
     return <div>Error: {error.message}</div>;

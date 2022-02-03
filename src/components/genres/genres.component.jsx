@@ -7,32 +7,31 @@ const Genres = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const getGenres = async () => {
+      fetch('http://localhost:4000/v1/genres')
+        .then((response) => {
+          console.log('Status code is : ', response.status);
+          if (response.status !== 200) {
+            let err = Error;
+            err.message = 'Invalid status code :' + response.status;
+            setError(err);
+          }
+          return response.json();
+        })
+        .then(
+          (json) => {
+            setGenres(json.genres);
+            setIsLoaded(true);
+          },
+          (error) => {
+            console.log(error);
+            setIsLoaded(true);
+            setError(error);
+          }
+        );
+    };
     getGenres();
   }, []);
-
-  const getGenres = async () => {
-    fetch('http://localhost:4000/v1/genres')
-      .then((response) => {
-        console.log('Status code is : ', response.status);
-        if (response.status !== 200) {
-          let err = Error;
-          err.message = 'Invalid status code :' + response.status;
-          setError(err);
-        }
-        return response.json();
-      })
-      .then(
-        (json) => {
-          setGenres(json.genres);
-          setIsLoaded(true);
-        },
-        (error) => {
-          console.log(error);
-          setIsLoaded(true);
-          setError(error);
-        }
-      );
-  };
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -46,7 +45,12 @@ const Genres = () => {
         <ul>
           {genres.map((genre) => (
             <li key={genre.id}>
-              <Link to={`/genres/${genre.id}`}>{genre.genre_name}</Link>
+              <Link
+                to={`/genres/${genre.id}`}
+                state={{ genreName: genre.genre_name }}
+              >
+                {genre.genre_name}
+              </Link>
             </li>
           ))}
         </ul>
