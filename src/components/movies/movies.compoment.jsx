@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     getMovies();
