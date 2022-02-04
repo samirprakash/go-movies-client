@@ -1,16 +1,33 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useReducer } from 'react';
 
 const EditMovie = () => {
-  const [movie, setMovie] = useState({});
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState(null);
+  const formReducer = (state, event) => {
+    return {
+      ...state,
+      [event.name]: event.value,
+    };
+  };
+
+  const [movie, setMovie] = useReducer(formReducer, {});
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('submitting form', movie);
+  };
+
+  const handleChange = (event) => {
+    setMovie({
+      name: event.target.name,
+      value: event.target.value,
+    });
+  };
 
   return (
     <Fragment>
       <h2>Add/Edit Movie</h2>
       <hr />
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">
             Title
@@ -20,7 +37,8 @@ const EditMovie = () => {
             className="form-control"
             id="title"
             name="title"
-            value={movie.title}
+            value={movie.title || ''}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
@@ -32,7 +50,8 @@ const EditMovie = () => {
             className="form-control"
             id="release_date"
             name="release_date"
-            value={movie.release_date}
+            value={movie.release_date || ''}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
@@ -44,14 +63,21 @@ const EditMovie = () => {
             className="form-control"
             id="runtime"
             name="runtime"
-            value={movie.runtime}
+            value={movie.runtime || ''}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
           <label htmlFor="mpaa_rating" className="form-label">
             MPAA Rating
           </label>
-          <select className="form-select" value={movie.mpaa_rating}>
+          <select
+            className="form-select"
+            name="mpaa_rating"
+            id="mpaa_rating"
+            value={movie.mpaa_rating || ''}
+            onChange={handleChange}
+          >
             <option value="choose" className="form-select">
               Choose ...
             </option>
@@ -81,7 +107,8 @@ const EditMovie = () => {
             className="form-control"
             id="rating"
             name="rating"
-            value={movie.rating}
+            value={movie.rating || ''}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
@@ -94,9 +121,9 @@ const EditMovie = () => {
             cols="10"
             rows="3"
             className="form-control"
-          >
-            {movie.description}
-          </textarea>
+            value={movie.description || ''}
+            onChange={handleChange}
+          />
         </div>
         <hr />
         <button className="btn btn-primary">Save</button>
