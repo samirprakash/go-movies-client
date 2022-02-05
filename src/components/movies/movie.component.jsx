@@ -8,7 +8,7 @@ const Movie = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getMovies = async () => {
+    const getMovie = async () => {
       await fetch(`http://localhost:4000/v1/movies/${id}`)
         .then((response) => {
           console.log('Status code is : ', response.status);
@@ -31,7 +31,7 @@ const Movie = () => {
           }
         );
     };
-    getMovies();
+    getMovie();
   }, [id]);
 
   if (movie.genres) {
