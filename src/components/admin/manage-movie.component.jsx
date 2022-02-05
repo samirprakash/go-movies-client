@@ -26,7 +26,11 @@ const ManageMovie = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('submitting form', movie);
+    console.log(JSON.stringify(movie));
+    const requestOptions = { method: 'POST', body: JSON.stringify(movie) };
+    fetch('http://localhost:4000/v1/admin/movies', requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   };
 
   const handleChange = (event) => {
@@ -76,7 +80,7 @@ const ManageMovie = () => {
     } else {
       setIsLoaded(true);
     }
-  }, []);
+  }, [id]);
 
   if (error) {
     return <div>Error: {error.message}</div>;
