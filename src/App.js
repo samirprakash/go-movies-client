@@ -31,7 +31,7 @@ function App() {
                     <Link to="/genres">Genres</Link>
                   </li>
                   <li className="list-group-item">
-                    <Link to="/admin/movies/add">Add Movie</Link>
+                    <Link to="/admin/movies/0">Add Movie</Link>
                   </li>
                   <li className="list-group-item">
                     <Link to="/admin">Admin</Link>
@@ -50,7 +50,7 @@ function App() {
                 <Route path="admin" element={<Admin />}></Route>
                 <Route
                   exact
-                  path="admin/movies/add"
+                  path="admin/movies/:id"
                   element={<EditMovie />}
                 ></Route>
               </Routes>
