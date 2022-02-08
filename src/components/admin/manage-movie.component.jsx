@@ -16,6 +16,7 @@ const ManageMovie = () => {
   const [movie, setMovie] = useReducer(formReducer, {});
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
+  const [errors, setErrors] = useState([]);
   const [mpaaOptions] = useState([
     { id: 1, value: 'G', label: 'G' },
     { id: 2, value: 'PG', label: 'PG' },
@@ -26,7 +27,18 @@ const ManageMovie = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(JSON.stringify(movie));
+
+    let errors = [];
+    console.log(movie.title);
+    if (movie.title === undefined) {
+      errors.push('title');
+    }
+
+    setErrors(errors);
+    if (errors.length > 0) {
+      return false;
+    }
+
     const requestOptions = { method: 'POST', body: JSON.stringify(movie) };
     fetch('http://localhost:4000/v1/admin/movies', requestOptions)
       .then((response) => response.json())
@@ -38,6 +50,10 @@ const ManageMovie = () => {
       name: event.target.name,
       value: event.target.value,
     });
+  };
+
+  const hasError = (key) => {
+    return errors.indexOf(key) !== -1;
   };
 
   useEffect(() => {
@@ -95,9 +111,12 @@ const ManageMovie = () => {
         <form onSubmit={handleSubmit}>
           <Input
             name="title"
+            className={hasError('title') ? 'is-invalid' : ''}
             label="Title"
             value={movie.title || ''}
             fn={handleChange}
+            errorDiv={hasError('title') ? 'text-danger' : 'd-none'}
+            errorMsg="Please enter a title"
           />
           <Input
             name="release_date"
