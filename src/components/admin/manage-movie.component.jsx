@@ -29,10 +29,26 @@ const ManageMovie = () => {
     event.preventDefault();
 
     let errors = [];
-    console.log(movie.title);
     if (movie.title === undefined) {
       errors.push('title');
     }
+    if (movie.release_date === undefined) {
+      errors.push('release_date');
+    }
+    if (movie.runtime === undefined) {
+      errors.push('runtime');
+    }
+    if (movie.mpaa_rating === undefined) {
+      errors.push('mpaa_rating');
+    }
+    if (movie.rating === undefined) {
+      errors.push('rating');
+    }
+    if (movie.description === undefined) {
+      errors.push('description');
+    }
+
+    console.log(errors);
 
     setErrors(errors);
     if (errors.length > 0) {
@@ -120,36 +136,51 @@ const ManageMovie = () => {
           />
           <Input
             name="release_date"
+            className={hasError('release_date') ? 'is-invalid' : ''}
             label="Release Date"
             value={movie.release_date || ''}
             fn={handleChange}
+            errorDiv={hasError('release_date') ? 'text-danger' : 'd-none'}
+            errorMsg="Please enter a release date"
           />
           <Input
             name="runtime"
+            className={hasError('runtime') ? 'is-invalid' : ''}
             label="Runtime"
             value={movie.runtime || ''}
             fn={handleChange}
+            errorDiv={hasError('runtime') ? 'text-danger' : 'd-none'}
+            errorMsg="Please enter the total rumtime"
           />
           <Select
             name="mpaa_rating"
+            className={hasError('mpaa_rating') ? 'is-invalid' : ''}
             label="MPAA Rating"
             value={movie.mpaa_rating || ''}
             fn={handleChange}
             options={mpaaOptions}
+            errorDiv={hasError('mpaa_rating') ? 'text-danger' : 'd-none'}
+            errorMsg="Please enter the MPAA rating"
           ></Select>
           <Input
             name="rating"
+            className={hasError('rating') ? 'is-invalid' : ''}
             label="Rating"
             value={movie.rating || ''}
             fn={handleChange}
+            errorDiv={hasError('rating') ? 'text-danger' : 'd-none'}
+            errorMsg="Please enter the rating"
           />
           <TextArea
             name="description"
+            className={hasError('description') ? 'is-invalid' : ''}
             label="Description"
             cols="10"
             rows="3"
             value={movie.description || ''}
             fn={handleChange}
+            errorDiv={hasError('description') ? 'text-danger' : 'd-none'}
+            errorMsg="Please enter a description"
           ></TextArea>
           <hr />
           <button className="btn btn-primary">Save</button>

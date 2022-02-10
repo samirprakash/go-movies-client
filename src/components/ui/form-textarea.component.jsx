@@ -1,4 +1,14 @@
-const TextArea = ({ name, label, cols, rows, value, fn }) => {
+const TextArea = ({
+  name,
+  className,
+  label,
+  cols,
+  rows,
+  value,
+  fn,
+  errorDiv,
+  errorMsg,
+}) => {
   return (
     <div className="mb-3">
       <label htmlFor={name} className="form-label">
@@ -6,13 +16,14 @@ const TextArea = ({ name, label, cols, rows, value, fn }) => {
       </label>
       <textarea
         name={name}
+        className={`form-control ${className}`}
         id={name}
         cols={cols}
         rows={rows}
-        className="form-control"
         value={value}
         onChange={fn}
       />
+      <div className={errorDiv}>{errorMsg}</div>
     </div>
   );
 };
