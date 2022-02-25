@@ -29,6 +29,7 @@ const ManageMovie = () => {
     event.preventDefault();
 
     let errors = [];
+    movie.id = id;
     if (movie.title === undefined) {
       errors.push('title');
     }
