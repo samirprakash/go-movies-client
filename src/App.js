@@ -91,7 +91,7 @@ function App() {
                 <Route
                   exact
                   path="admin/movies/:id"
-                  element={<ManageMovie />}
+                  element={<ManageMovie token={JWT} />}
                 ></Route>
               </Routes>
             </div>

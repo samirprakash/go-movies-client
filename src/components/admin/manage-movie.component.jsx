@@ -7,7 +7,7 @@ import Input from '../ui/form-input.component';
 import Select from '../ui/form-select.component';
 import TextArea from '../ui/form-textarea.component';
 
-const ManageMovie = () => {
+const ManageMovie = ({ token }) => {
   const formReducer = (state, event) => {
     return {
       ...state,
@@ -16,6 +16,7 @@ const ManageMovie = () => {
   };
 
   const { id } = useParams();
+  const navigate = useNavigate();
   const [movie, setMovie] = useReducer(formReducer, {});
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
@@ -28,7 +29,9 @@ const ManageMovie = () => {
     { id: 4, value: 'R', label: 'R' },
     { id: 5, value: 'NC17', label: 'NC17' },
   ]);
-  const navigate = useNavigate();
+  const headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  headers.append('Authorization', 'Bearer ' + token);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -59,7 +62,12 @@ const ManageMovie = () => {
       return false;
     }
 
-    const requestOptions = { method: 'POST', body: JSON.stringify(movie) };
+    const requestOptions = {
+      method: 'POST',
+      body: JSON.stringify(movie),
+      headers: headers,
+    };
+
     fetch('http://localhost:4000/v1/admin/movies', requestOptions)
       .then((response) => response.json())
       .then((data) => {
@@ -116,6 +124,11 @@ const ManageMovie = () => {
   };
 
   useEffect(() => {
+    if (token === '') {
+      navigate('/login');
+      return;
+    }
+
     const getMovie = async () => {
       await fetch(`http://localhost:4000/v1/movies/${id}`)
         .then((response) => {
