@@ -1,5 +1,4 @@
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import Admin from './components/admin/admin.component';
 import ManageMovie from './components/admin/manage-movie.component';
 import Genre from './components/genres/genre.component';
 import Genres from './components/genres/genres.component';
@@ -43,11 +42,17 @@ function App() {
             <div className="col-md-10">
               <Routes>
                 <Route path="/" element={<Home />}></Route>
-                <Route path="movies" element={<Movies />}></Route>
-                <Route path="movies/:id" element={<Movie />}></Route>
+                <Route
+                  path="movies"
+                  element={<Movies isAdmin={false} />}
+                ></Route>
+                <Route
+                  path="movies/:id"
+                  element={<Movie isAdmin={false} />}
+                ></Route>
                 <Route exact path="genres" element={<Genres />}></Route>
                 <Route exact path="genres/:id" element={<Genre />}></Route>
-                <Route path="admin" element={<Admin />}></Route>
+                <Route path="admin" element={<Movies isAdmin={true} />}></Route>
                 <Route
                   exact
                   path="admin/movies/:id"

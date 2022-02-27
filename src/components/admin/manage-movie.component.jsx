@@ -54,8 +54,6 @@ const ManageMovie = () => {
       errors.push('description');
     }
 
-    console.log(errors);
-
     setErrors(errors);
     if (errors.length > 0) {
       return false;
@@ -72,6 +70,7 @@ const ManageMovie = () => {
             type: 'alert-success',
             msg: 'Changes saved successfully',
           });
+          navigate('/movies');
         }
       });
   };
@@ -144,7 +143,6 @@ const ManageMovie = () => {
             setIsLoaded(true);
           },
           (error) => {
-            console.log(error);
             setIsLoaded(true);
             setError(error);
           }
@@ -154,6 +152,13 @@ const ManageMovie = () => {
     if (id > 0) {
       getMovie();
     } else {
+      setMovie({ name: 'id', value: id });
+      setMovie({ name: 'title', value: '' });
+      setMovie({ name: 'release_date', value: '' });
+      setMovie({ name: 'runtime', value: '' });
+      setMovie({ name: 'mpaa_rating', value: '' });
+      setMovie({ name: 'rating', value: '' });
+      setMovie({ name: 'description', value: '' });
       setIsLoaded(true);
     }
   }, [id]);
@@ -165,7 +170,7 @@ const ManageMovie = () => {
   } else {
     return (
       <Fragment>
-        <h2>Add/Edit Movie</h2>
+        <h2>{id === '0' ? 'Add Movie' : 'Edit Movie'}</h2>
         <Alert type={alert.type} msg={alert.msg}></Alert>
         <hr />
 

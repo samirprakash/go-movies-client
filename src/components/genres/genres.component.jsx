@@ -10,7 +10,6 @@ const Genres = () => {
     const getGenres = async () => {
       fetch('http://localhost:4000/v1/genres')
         .then((response) => {
-          console.log('Status code is : ', response.status);
           if (response.status !== 200) {
             let err = Error;
             err.message = 'Invalid status code :' + response.status;
@@ -24,7 +23,6 @@ const Genres = () => {
             setIsLoaded(true);
           },
           (error) => {
-            console.log(error);
             setIsLoaded(true);
             setError(error);
           }

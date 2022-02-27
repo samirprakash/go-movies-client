@@ -11,7 +11,6 @@ const Movie = () => {
     const getMovie = async () => {
       await fetch(`http://localhost:4000/v1/movies/${id}`)
         .then((response) => {
-          console.log('Status code is : ', response.status);
           if (response.status !== 200) {
             let err = Error;
             err.message = 'Invalid status code :' + response.status;
@@ -25,7 +24,6 @@ const Movie = () => {
             setIsLoaded(true);
           },
           (error) => {
-            console.log(error);
             setIsLoaded(true);
             setError(error);
           }

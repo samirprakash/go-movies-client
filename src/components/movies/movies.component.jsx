@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Movies = () => {
+const Movies = ({ isAdmin }) => {
   const [movies, setMovies] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
@@ -10,7 +10,6 @@ const Movies = () => {
     const getMovies = async () => {
       await fetch('http://localhost:4000/v1/movies')
         .then((response) => {
-          console.log('Status code is : ', response.status);
           if (response.status !== 200) {
             let err = Error;
             err.message = 'Invalid status code :' + response.status;
@@ -24,7 +23,6 @@ const Movies = () => {
             setIsLoaded(true);
           },
           (error) => {
-            console.log(error);
             setIsLoaded(true);
             setError(error);
           }
@@ -40,13 +38,13 @@ const Movies = () => {
   } else {
     return (
       <Fragment>
-        <h2>Choose a movie</h2>
+        <h2>{isAdmin ? 'Manage catalogue' : 'Choose a movie'}</h2>
 
         <div className="list-group">
           {movies.map((movie) => (
             <Link
               key={movie.id}
-              to={`/movies/${movie.id}`}
+              to={isAdmin ? `/admin/movies/${movie.id}` : `/movies/${movie.id}`}
               className="list-group-item list-group-item-action"
             >
               {movie.title}
