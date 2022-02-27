@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Input = ({ name, className, label, value, fn, errorDiv, errorMsg }) => {
   return (
     <div className="mb-3">

@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useReducer, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Alert from '../ui/form-alert.component';
 import Input from '../ui/form-input.component';
 import Select from '../ui/form-select.component';
 import TextArea from '../ui/form-textarea.component';
@@ -17,6 +18,7 @@ const ManageMovie = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [errors, setErrors] = useState([]);
+  const [alert, setAlert] = useState({ type: 'd-none', msg: '' });
   const [mpaaOptions] = useState([
     { id: 1, value: 'G', label: 'G' },
     { id: 2, value: 'PG', label: 'PG' },
@@ -57,9 +59,20 @@ const ManageMovie = () => {
     }
 
     const requestOptions = { method: 'POST', body: JSON.stringify(movie) };
+    console.log(movie.id);
+    console.log(id);
     fetch('http://localhost:4000/v1/admin/movies', requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        if (data.error) {
+          setAlert({ type: 'alert-danger', msg: data.error.message });
+        } else {
+          setAlert({
+            type: 'alert-success',
+            msg: 'Changes saved successfully',
+          });
+        }
+      });
   };
 
   const handleChange = (event) => {
@@ -94,9 +107,9 @@ const ManageMovie = () => {
               name: 'release_date',
               value: releaseDate.toISOString().split('T')[0],
             });
-            setMovie({ name: 'runtime', value: json.movie.runtime });
+            setMovie({ name: 'runtime', value: json.movie.runtime.toString() });
             setMovie({ name: 'mpaa_rating', value: json.movie.mpaa_rating });
-            setMovie({ name: 'rating', value: json.movie.rating });
+            setMovie({ name: 'rating', value: json.movie.rating.toString() });
             setMovie({ name: 'description', value: json.movie.description });
             setIsLoaded(true);
           },
@@ -123,6 +136,7 @@ const ManageMovie = () => {
     return (
       <Fragment>
         <h2>Add/Edit Movie</h2>
+        <Alert type={alert.type} msg={alert.msg}></Alert>
         <hr />
 
         <form onSubmit={handleSubmit}>
