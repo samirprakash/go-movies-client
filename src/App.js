@@ -75,7 +75,7 @@ function App() {
                 <Route path="/" element={<Home />}></Route>
                 <Route
                   path="login"
-                  element={<Login handleJWTChange={handleJWTChange} />}
+                  element={<Login handleJWT={handleJWTChange} />}
                 ></Route>
                 <Route
                   path="movies"

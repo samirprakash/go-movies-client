@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Alert from '../ui/form-alert.component';
 import Input from '../ui/form-input.component';
 
-const Login = () => {
+const Login = ({ handleJWT }) => {
   const formReducer = (state, event) => {
     return {
       ...state,
@@ -45,9 +45,14 @@ const Login = () => {
             type: 'alert-success',
             msg: 'Changes saved successfully',
           });
+          handleJWTChange(Object.values(data)[0]);
           navigate('/');
         }
       });
+  };
+
+  const handleJWTChange = (jwt) => {
+    handleJWT(jwt);
   };
 
   const handleChange = (event) => {
