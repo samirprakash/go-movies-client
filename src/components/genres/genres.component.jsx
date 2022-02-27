@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Genres = () => {
@@ -37,7 +37,7 @@ const Genres = () => {
     return <div>Loading ...</div>;
   } else {
     return (
-      <Fragment>
+      <>
         <h2>Genres</h2>
 
         <div className="list-group">
@@ -52,7 +52,7 @@ const Genres = () => {
             </Link>
           ))}
         </div>
-      </Fragment>
+      </>
     );
   }
 };

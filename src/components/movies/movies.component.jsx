@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Movies = ({ isAdmin }) => {
@@ -37,7 +37,7 @@ const Movies = ({ isAdmin }) => {
     return <p>Loading...</p>;
   } else {
     return (
-      <Fragment>
+      <>
         <h2>{isAdmin ? 'Manage catalogue' : 'Choose a movie'}</h2>
 
         <div className="list-group">
@@ -51,7 +51,7 @@ const Movies = ({ isAdmin }) => {
             </Link>
           ))}
         </div>
-      </Fragment>
+      </>
     );
   }
 };

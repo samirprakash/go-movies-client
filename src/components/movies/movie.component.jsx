@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const Movie = () => {
@@ -44,7 +44,7 @@ const Movie = () => {
     return <p>Loading...</p>;
   } else {
     return (
-      <Fragment>
+      <>
         <h2>
           Movie: {movie.title} ({movie.year})
         </h2>
@@ -86,7 +86,7 @@ const Movie = () => {
             </tr>
           </tbody>
         </table>
-      </Fragment>
+      </>
     );
   }
 };

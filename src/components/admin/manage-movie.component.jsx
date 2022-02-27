@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -169,7 +169,7 @@ const ManageMovie = () => {
     return <p>Loading...</p>;
   } else {
     return (
-      <Fragment>
+      <>
         <h2>{id === '0' ? 'Add Movie' : 'Edit Movie'}</h2>
         <Alert type={alert.type} msg={alert.msg}></Alert>
         <hr />
@@ -243,7 +243,7 @@ const ManageMovie = () => {
             </button>
           )}
         </form>
-      </Fragment>
+      </>
     );
   }
 };
