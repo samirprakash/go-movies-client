@@ -12,7 +12,6 @@ const Login = ({ handleJWT }) => {
   };
 
   const [login, setLogin] = useReducer(formReducer, {});
-  const [error, setError] = useState(null);
   const [errors, setErrors] = useState([]);
   const [alert, setAlert] = useState({ type: 'd-none', msg: '' });
   const navigate = useNavigate();
