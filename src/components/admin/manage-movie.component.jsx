@@ -1,5 +1,7 @@
 import { Fragment, useEffect, useReducer, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Alert from '../ui/form-alert.component';
 import Input from '../ui/form-input.component';
 import Select from '../ui/form-select.component';
@@ -26,6 +28,7 @@ const ManageMovie = () => {
     { id: 4, value: 'R', label: 'R' },
     { id: 5, value: 'NC17', label: 'NC17' },
   ]);
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -59,8 +62,6 @@ const ManageMovie = () => {
     }
 
     const requestOptions = { method: 'POST', body: JSON.stringify(movie) };
-    console.log(movie.id);
-    console.log(id);
     fetch('http://localhost:4000/v1/admin/movies', requestOptions)
       .then((response) => response.json())
       .then((data) => {
@@ -84,6 +85,35 @@ const ManageMovie = () => {
 
   const hasError = (key) => {
     return errors.indexOf(key) !== -1;
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+
+    confirmAlert({
+      title: 'Delete Movie?',
+      message: 'Are you sure to do this.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            fetch(`http://localhost:4000/v1/movies/${id}`, { method: 'DELETE' })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.error) {
+                  setAlert({ type: 'alert-danger', msg: data.error.message });
+                } else {
+                  navigate('/admin');
+                }
+              });
+          },
+        },
+        {
+          label: 'No',
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   useEffect(() => {
@@ -199,6 +229,14 @@ const ManageMovie = () => {
           ></TextArea>
           <hr />
           <button className="btn btn-primary">Save</button>
+          <Link to="/admin" className="btn btn-warning ms-1">
+            Cancel
+          </Link>
+          {movie.id > 0 && (
+            <button className="btn btn-danger float-end" onClick={handleDelete}>
+              Delete
+            </button>
+          )}
         </form>
       </Fragment>
     );
