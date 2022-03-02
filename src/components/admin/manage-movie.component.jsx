@@ -174,7 +174,7 @@ const ManageMovie = ({ token }) => {
       setMovie({ name: 'description', value: '' });
       setIsLoaded(true);
     }
-  }, [id]);
+  }, [id, navigate, token]);
 
   if (error) {
     return <div>Error: {error.message}</div>;

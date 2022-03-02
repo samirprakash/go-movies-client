@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import Admin from './components/admin/admin.component';
 import ManageMovie from './components/admin/manage-movie.component';
 import Genre from './components/genres/genre.component';
 import Genres from './components/genres/genres.component';
@@ -79,7 +80,7 @@ function App() {
                 ></Route>
                 <Route
                   path="movies"
-                  element={<Movies isAdmin={false} />}
+                  element={<Movies token={JWT} isAdmin={false} />}
                 ></Route>
                 <Route
                   path="movies/:id"
@@ -87,7 +88,10 @@ function App() {
                 ></Route>
                 <Route exact path="genres" element={<Genres />}></Route>
                 <Route exact path="genres/:id" element={<Genre />}></Route>
-                <Route path="admin" element={<Movies isAdmin={true} />}></Route>
+                <Route
+                  path="admin"
+                  element={<Admin token={JWT} isAdmin={true} />}
+                ></Route>
                 <Route
                   exact
                   path="admin/movies/:id"
