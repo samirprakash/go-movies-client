@@ -62,13 +62,11 @@ const ManageMovie = ({ token }) => {
       return false;
     }
 
-    const requestOptions = {
+    fetch('http://localhost:4000/v1/admin/movies', {
       method: 'POST',
       body: JSON.stringify(movie),
       headers: headers,
-    };
-
-    fetch('http://localhost:4000/v1/admin/movies', requestOptions)
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
@@ -104,7 +102,10 @@ const ManageMovie = ({ token }) => {
         {
           label: 'Yes',
           onClick: () => {
-            fetch(`http://localhost:4000/v1/movies/${id}`, { method: 'DELETE' })
+            fetch(`http://localhost:4000/v1/movies/${id}`, {
+              method: 'DELETE',
+              headers: headers,
+            })
               .then((response) => response.json())
               .then((data) => {
                 if (data.error) {
