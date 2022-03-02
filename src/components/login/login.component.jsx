@@ -44,7 +44,9 @@ const Login = ({ handleJWT }) => {
             type: 'alert-success',
             msg: 'Changes saved successfully',
           });
-          handleJWTChange(Object.values(data)[0]);
+          const token = Object.values(data)[0];
+          handleJWTChange(token);
+          window.localStorage.setItem('token', JSON.stringify(token));
           navigate('/');
         }
       });

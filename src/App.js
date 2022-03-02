@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import Admin from './components/admin/admin.component';
 import ManageMovie from './components/admin/manage-movie.component';
@@ -12,12 +12,22 @@ import Movies from './components/movies/movies.component';
 function App() {
   const [JWT, setJWT] = useState('');
 
+  useEffect(() => {
+    const token = window.localStorage.getItem('token');
+    if (token) {
+      if (JWT === '') {
+        setJWT(JSON.parse(token));
+      }
+    }
+  });
+
   const handleJWTChange = (jwt) => {
     setJWT(jwt);
   };
 
   const logout = () => {
     setJWT('');
+    window.localStorage.removeItem('token');
   };
 
   return (
@@ -34,7 +44,7 @@ function App() {
               </div>
             ) : (
               <div className="col mt-4 text-end">
-                <Link to="/logout" onClick={logout}>
+                <Link to="/" onClick={logout}>
                   Logout
                 </Link>
               </div>
