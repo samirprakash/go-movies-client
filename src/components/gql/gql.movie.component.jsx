@@ -5,7 +5,6 @@ const GQLMovie = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const payload = `
@@ -20,6 +19,7 @@ const GQLMovie = () => {
             runtime
             rating
             mpaa_rating
+            poster
         }
     }
     `;
@@ -48,9 +48,7 @@ const GQLMovie = () => {
     movie.genres = [];
   }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
+  if (!isLoaded) {
     return <p>Loading...</p>;
   } else {
     return (
@@ -58,6 +56,15 @@ const GQLMovie = () => {
         <h2>
           Movie: {movie.title} ({movie.year})
         </h2>
+
+        {movie.poster !== '' && (
+          <div>
+            <img
+              src={`https://image.tmdb.org/t/p/w200${movie.poster}`}
+              alt="poster"
+            />
+          </div>
+        )}
 
         <div className="float-start">
           <small>Rating: {movie.mpaa_rating}</small>
