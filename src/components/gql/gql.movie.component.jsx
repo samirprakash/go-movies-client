@@ -28,7 +28,7 @@ const GQLMovie = () => {
       const headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
-      await fetch(`http://localhost:4000/v1/graphql`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/v1/graphql`, {
         method: 'POST',
         body: payload,
         headers: headers,

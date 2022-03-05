@@ -6,7 +6,6 @@ import Alert from '../ui/form-alert.component';
 import Input from '../ui/form-input.component';
 import Select from '../ui/form-select.component';
 import TextArea from '../ui/form-textarea.component';
-
 const ManageMovie = ({ token }) => {
   const formReducer = (state, event) => {
     return {
@@ -62,7 +61,7 @@ const ManageMovie = ({ token }) => {
       return false;
     }
 
-    fetch('http://localhost:4000/v1/admin/movies', {
+    fetch(`${process.env.REACT_APP_API_URL}/v1/admin/movies`, {
       method: 'POST',
       body: JSON.stringify(movie),
       headers: headers,
@@ -102,7 +101,7 @@ const ManageMovie = ({ token }) => {
         {
           label: 'Yes',
           onClick: () => {
-            fetch(`http://localhost:4000/v1/movies/${id}`, {
+            fetch(`${process.env.REACT_APP_API_URL}/v1/movies/${id}`, {
               method: 'DELETE',
               headers: headers,
             })
@@ -131,7 +130,7 @@ const ManageMovie = ({ token }) => {
     }
 
     const getMovie = async () => {
-      await fetch(`http://localhost:4000/v1/movies/${id}`)
+      await fetch(`${process.env.REACT_APP_API_URL}/v1/movies/${id}`)
         .then((response) => {
           if (response.status !== 200) {
             let err = Error;

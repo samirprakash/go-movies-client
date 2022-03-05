@@ -12,7 +12,7 @@ const Genre = () => {
 
   useEffect(() => {
     const getMoviesByGenre = async () => {
-      await fetch(`http://localhost:4000/v1/genres/${id}/movies/`)
+      await fetch(`${process.env.REACT_APP_API_URL}/v1/genres/${id}/movies/`)
         .then((response) => {
           if (response.status !== 200) {
             let err = Error;
