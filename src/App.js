@@ -5,6 +5,7 @@ import ManageMovie from './components/admin/manage-movie.component';
 import Genre from './components/genres/genre.component';
 import Genres from './components/genres/genres.component';
 import GQL from './components/gql/gql.component';
+import GQLMovie from './components/gql/gql.movie.component';
 import Home from './components/home/home.component';
 import Login from './components/login/login.component';
 import Movie from './components/movies/movie.component';
@@ -112,6 +113,7 @@ function App() {
                   element={<ManageMovie token={JWT} />}
                 ></Route>
                 <Route exact path="gql" element={<GQL />}></Route>
+                <Route exact path="gql/:id" element={<GQLMovie />}></Route>
               </Routes>
             </div>
           </div>

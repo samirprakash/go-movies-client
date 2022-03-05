@@ -1,4 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Input from '../ui/form-input.component';
 
 const GQL = () => {
@@ -24,7 +25,7 @@ const GQL = () => {
   const doSearch = async () => {
     const payload = `
     {
-      search(titleContains: "${gql.search}") {
+      search(titleContains: ${gql.search}) {
         id
         title
         runtime
@@ -94,10 +95,10 @@ const GQL = () => {
       />
       <div className="list-group">
         {movies.map((m) => (
-          <a
+          <Link
             key={m.id}
             className="list-group-item list-group-item-action"
-            href="#!"
+            to={`/gql/${m.id}`}
           >
             <strong>{m.title}</strong>
             <br />
@@ -106,7 +107,7 @@ const GQL = () => {
             </small>
             <br />
             {m.description.slice(0, 100)}...
-          </a>
+          </Link>
         ))}
       </div>
     </>
