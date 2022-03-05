@@ -4,6 +4,7 @@ import Admin from './components/admin/admin.component';
 import ManageMovie from './components/admin/manage-movie.component';
 import Genre from './components/genres/genre.component';
 import Genres from './components/genres/genres.component';
+import GQL from './components/gql/gql.component';
 import Home from './components/home/home.component';
 import Login from './components/login/login.component';
 import Movie from './components/movies/movie.component';
@@ -19,7 +20,7 @@ function App() {
         setJWT(JSON.parse(token));
       }
     }
-  });
+  }, [JWT]);
 
   const handleJWTChange = (jwt) => {
     setJWT(jwt);
@@ -77,6 +78,9 @@ function App() {
                       </li>
                     </>
                   )}
+                  <li className="list-group-item">
+                    <Link to="/gql">GQL</Link>
+                  </li>
                 </ul>
               </nav>
             </div>
@@ -107,6 +111,7 @@ function App() {
                   path="admin/movies/:id"
                   element={<ManageMovie token={JWT} />}
                 ></Route>
+                <Route exact path="gql" element={<GQL />}></Route>
               </Routes>
             </div>
           </div>
